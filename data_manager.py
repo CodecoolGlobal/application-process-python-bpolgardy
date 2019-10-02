@@ -14,12 +14,69 @@ def get_mentor_names_by_first_name(cursor, first_name):
 
 
 @database_common.connection_handler
-def get_mentor_names(cursor):
+def get_all_applicants(cursor):
     cursor.execute("""
-                    SELECT first_name, last_name FROM mentors
+                    SELECT * FROM applicants;
+                   """)
+    applicants = cursor.fetchall()
+    return applicants
+
+
+@database_common.connection_handler
+def get_all_mentors_data(cursor):
+    cursor.execute("""
+                    SELECT mentors.first_name, mentors.last_name, schools.name school_name, schools.country country
+                    FROM mentors
+                    INNER JOIN schools
+                     ON mentors.city = schools.city
+                    ORDER BY mentors.id;
                    """)
     names = cursor.fetchall()
     return names
+
+
+@database_common.connection_handler
+def get_all_school_data(cursor):
+    cursor.execute("""
+                     SELECT
+                      COALESCE(mentors.first_name, 'No data') first_name,
+                      COALESCE (mentors.last_name, 'No data') last_name,
+                      schools.name school_name,
+                      schools.country country
+                     FROM mentors
+                     RIGHT JOIN schools
+                      ON mentors.city = schools.city
+                     ORDER BY mentors.id;
+                   """)
+    school_data = cursor.fetchall()
+    return school_data
+
+
+@database_common.connection_handler
+def get_number_of_mentors_by_country(cursor):
+    cursor.execute("""
+                    SELECT schools.country country, COUNT(*)
+                    FROM mentors
+                    INNER JOIN schools
+                     ON mentors.city = schools.city
+                    GROUP BY country
+                    ORDER BY country;
+                   """)
+    number_of_mentors_by_country = cursor.fetchall()
+    return number_of_mentors_by_country
+
+
+@database_common.connection_handler
+def get_contacts(cursor):
+    cursor.execute("""
+                    SELECT schools.name school_name, mentors.first_name, mentors.last_name
+                    FROM mentors
+                    INNER JOIN schools
+                     ON schools.contact_person = mentors.id
+                    ORDER BY schools.name;
+                   """)
+    contacts = cursor.fetchall()
+    return contacts
 
 
 @database_common.connection_handler

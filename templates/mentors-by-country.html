@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <table class="">
+        <thead class="table100-head">
+        <tr>
+            <th colspan="4">Mentors by country</th>
+        </tr>
+        </thead>
+        <tbody class="table100-body">
+        <tr>
+            <td class="column1">Country</td>
+            <td class="column2">Count</td>
+        </tr>
+        {% for entity in data %}
+            <tr>
+                <td class="column1">{{ entity.country }}</td>
+                <td class="column2">{{ entity.count }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% include 'footer.html' %}
+{% endblock %}

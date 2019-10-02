@@ -9,12 +9,35 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/mentor-names')
-def mentor_names():
-    # We get back dictionaries here (for details check 'database_common.py')
-    mentor_names = data_manager.get_mentor_names()
+@app.route('/applicants')
+def route_applicants():
+    applicants_data = data_manager.get_all_applicants()
 
-    return render_template('mentor_names.html', mentor_names=mentor_names)
+    return render_template('applicants.html', applicants=applicants_data)
+
+
+@app.route('/mentors')
+def route_mentors():
+    mentors_data = data_manager.get_all_mentors_data()
+    return render_template('mentors.html', data=mentors_data)
+
+
+@app.route('/all-school')
+def route_all_school():
+    all_school_data = data_manager.get_all_school_data()
+    return render_template('mentors.html', data=all_school_data)
+
+
+@app.route('/mentors-by-country')
+def route_mentors_by_country():
+    mentors_by_country = data_manager.get_number_of_mentors_by_country()
+    return render_template('mentors-by-country.html', data=mentors_by_country)
+
+
+@app.route('/contacts')
+def route_contacts():
+    contacts = data_manager.get_contacts()
+    return render_template('contacts.html', data=contacts)
 
 
 @app.route('/mentor-nicknames')
@@ -75,7 +98,7 @@ def add_new_applicant():
 def update_record(table):
     if request.method == 'GET':
         names = data_manager.get_all_names_from_table(table)
-        return render_template('update.html')
+        return render_template('add_applicant.html', data_to_update=names)
     else:
         return redirect(url_for('index'))
 

@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <table class="">
+        <thead class="table100-head">
+        <tr>
+            <th colspan="4">Contact persons for all Codecool schools</th>
+        </tr>
+        </thead>
+        <tbody class="table100-body">
+        {% for entity in data %}
+            <tr>
+                <td class="column1">{{ entity.school_name }}</td>
+                <td class="column2">{{ entity.first_name }}</td>
+                <td class="column2">{{ entity.last_name }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% include 'footer.html' %}
+{% endblock %}
