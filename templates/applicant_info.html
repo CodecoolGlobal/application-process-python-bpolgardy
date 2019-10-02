@@ -5,7 +5,12 @@
     <div class="applicants">
         {% for applicant in applicant_info %}
             {{ applicant.first_name + ' ' + applicant.last_name }}<br>
-            {{ applicant.phone_number }}<br><br>
+            {{ applicant.phone_number }}<br>
+            {% if display_all %}
+            {{ applicant.email }}<br>
+            {{ applicant.application_code}}<br>
+            {% endif %}
+            <br>
         {% endfor%}
     </div>
 

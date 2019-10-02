@@ -34,12 +34,21 @@ def get_mentor_nicknames(cursor, city):
 
 
 @database_common.connection_handler
-def get_applicant_info(cursor, applicant_name):
-    cursor.execute("""
-                    SELECT * FROM applicants
-                    WHERE first_name = %(applicant_name)s
-                   """,
-                   {'applicant_name': applicant_name})
+def get_applicant_info(cursor, search_criterium, search_by_code=False):
+    if search_by_code:
+        cursor.execute("""
+                        SELECT * FROM applicants
+                        WHERE application_code = %(appl_code)s
+                       """,
+                       {'appl_code': search_criterium})
+
+    else:
+        cursor.execute("""
+                                SELECT * FROM applicants
+                                WHERE first_name = %(appl_name)s
+                               """,
+                       {'appl_name': search_criterium})
+
     applicant_info = cursor.fetchall()
     return applicant_info
 
@@ -57,11 +66,25 @@ def get_applicant_info_by_email(cursor, email):
 
 
 @database_common.connection_handler
+def get_all_names_from_table(cursor, applicants=False):
+    if applicants:
+        cursor.execute("""
+                        SELECT * FROM applicants
+                       """)
+    else:
+        cursor.execute("""
+                        SELECT * FROM mentors
+                       """)
+    names = cursor.fetchall()
+    return names
+
+
+@database_common.connection_handler
 def append_to_database(cursor, table_name, user_input):
-    print(type(user_input))
     cursor.execute(
-        sql.SQL("""INSERT INTO {table} (first_name, last_name, phone_number, email, application_code)
-                   VALUES (%s, %s, %s, %s, %s)
+        sql.SQL("""
+                 INSERT INTO {table} (first_name, last_name, phone_number, email, application_code)
+                 VALUES (%s, %s, %s, %s, %s)
                 """)
             .format(table=sql.Identifier(table_name)),
         [user_input.get('first_name'),

@@ -13,6 +13,11 @@
             <label for="email">Email (can be incomplete/partial):</label><br>
             <input id="email" name="email" size="25">
         </div>
+        {% elif appl_code %}
+        <div>
+            <label for="appl_code">Application code:</label><br>
+            <input id="appl_code" name="application_code" size="25">
+        </div>
         {% endif %}
         <div>
             <input type="submit" value="search">

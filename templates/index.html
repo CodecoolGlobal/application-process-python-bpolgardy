@@ -16,4 +16,13 @@
     <div>
         <a href="{{ url_for('add_new_applicant') }}">Add new applicant</a>
     </div>
+    <div>
+        <a href="{{ url_for('find_applicant_by_application_code') }}">Search by application code</a>
+    </div>
+    <div>
+        <a href="{{ url_for('update_record', table='mentors') }}">Update mentors</a>
+    </div>
+    <div>
+        <a href="{{ url_for('update_record', table='applicants') }}">Update applicants</a>
+    </div>
 {% endblock %}
