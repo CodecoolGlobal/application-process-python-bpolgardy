@@ -70,10 +70,10 @@ def get_number_of_mentors_by_country(cursor):
 def get_applicants_and_mentors(cursor):
     cursor.execute("""
                     SELECT
-                        applicants.first_name,
-                        applicants.application_code,
-                        COALESCE(mentors.first_name, 'No data'),
-                        COALESCE(mentors.last_name, 'No data')
+                        applicants.first_name applicant_first_name,
+                        applicants.application_code code,
+                        COALESCE(mentors.first_name, 'No data') mentor_first_name,
+                        COALESCE(mentors.last_name, 'No data') mentor_last_name
                     FROM applicants
                     LEFT JOIN applicants_mentors
                         ON applicants.id = applicants_mentors.applicant_id

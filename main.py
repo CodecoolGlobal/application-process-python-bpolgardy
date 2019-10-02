@@ -19,6 +19,7 @@ def route_applicants():
 @app.route('/applicants-and-mentors')
 def route_applicants_and_mentors():
     applicants_and_mentors = data_manager.get_applicants_and_mentors()
+    print(applicants_and_mentors)
     return render_template('applicants-mentors.html', data=applicants_and_mentors)
 
 
