@@ -67,6 +67,42 @@ def get_number_of_mentors_by_country(cursor):
 
 
 @database_common.connection_handler
+def get_applicants_and_mentors(cursor):
+    cursor.execute("""
+                    SELECT
+                        applicants.first_name,
+                        applicants.application_code,
+                        COALESCE(mentors.first_name, 'No data'),
+                        COALESCE(mentors.last_name, 'No data')
+                    FROM applicants
+                    LEFT JOIN applicants_mentors
+                        ON applicants.id = applicants_mentors.applicant_id
+                    LEFT JOIN mentors
+                        ON mentors.id = applicants_mentors.mentor_id
+                    ORDER BY applicants.id;
+                   """)
+    applicants_and_mentors = cursor.fetchall()
+    return applicants_and_mentors
+
+
+@database_common.connection_handler
+def get_application_info(cursor):
+    cursor.execute("""
+                    SELECT 
+                        applicants.first_name, 
+                        applicants.application_code,
+                        applicants_mentors.creation_date
+                    FROM applicants
+                    INNER JOIN applicants_mentors
+                        ON applicants.id = applicants_mentors.applicant_id
+                    WHERE creation_date > '2016-01-01'
+                    ORDER BY creation_date DESC;
+                   """)
+    application_info = cursor.fetchall()
+    return application_info
+
+
+@database_common.connection_handler
 def get_contacts(cursor):
     cursor.execute("""
                     SELECT schools.name school_name, mentors.first_name, mentors.last_name

@@ -9,11 +9,23 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/applicants')
+""""@app.route('/applicants')
 def route_applicants():
     applicants_data = data_manager.get_all_applicants()
 
-    return render_template('applicants.html', applicants=applicants_data)
+    return render_template('applicants.html', applicants=applicants_data)"""
+
+
+@app.route('/applicants-and-mentors')
+def route_applicants_and_mentors():
+    applicants_and_mentors = data_manager.get_applicants_and_mentors()
+    return render_template('applicants-mentors.html', data=applicants_and_mentors)
+
+
+@app.route('/applicants')
+def route_applicants():
+    applicants = data_manager.get_application_info()
+    return render_template('application.html', data=applicants)
 
 
 @app.route('/mentors')

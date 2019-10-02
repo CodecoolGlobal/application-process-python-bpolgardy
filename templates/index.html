@@ -2,10 +2,25 @@
 
 {% block content %}
     <div>
-        <a href="{{ url_for('route_mentors') }}">Mentor info</a>
+        <a href="{{ url_for('route_mentors') }}">List mentors</a>
+    </div>
+    <div>
+        <a href="{{ url_for('route_applicants') }}">List applicants</a>
+    </div>
+    <div>
+        <a href="{{ url_for('route_applicants_and_mentors') }}">List applicants and their mentors</a>
     </div>
     <div>
         <a href="{{ url_for('mentor_nicknames') }}">Miskolc mentor nicknames</a>
+    </div>
+    <div>
+        <a href="{{ url_for('route_mentors_by_country') }}">Show mentor count by country</a>
+    </div>
+    <div>
+        <a href="{{ url_for('route_all_school') }}">List school info</a>
+    </div>
+    <div>
+        <a href="{{ url_for('route_contacts') }}">Show schools contact persons</a>
     </div>
     <div>
         <a href="{{ url_for('find_applicant_by_first_name') }}">Find applicant by first name</a>
@@ -24,5 +39,8 @@
     </div>
     <div>
         <a href="{{ url_for('update_record', table='applicants') }}">Update applicants</a>
+    </div>
+    <div>
+        <a href="{{ url_for('route_applicants') }}">List applicants</a>
     </div>
 {% endblock %}
